@@ -1,0 +1,9 @@
+# WingzSphere Tech - Robots.txt
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://wingzspheretech.in/sitemap.xml
+
+# Crawl Delay
+Crawl-delay: 1
