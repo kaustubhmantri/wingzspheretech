@@ -93,7 +93,7 @@ export default function HomePage() {
             </div>
           </div>
 
-          {/* RIGHT: compact 2×2 cards (equal height + one-line subtitle) */}
+          {/* RIGHT: 2×2 cards (mobile: icon above; desktop: icon left) */}
           <div className="relative w-full lg:max-w-none">
             {/* background glow */}
             <div className="absolute -inset-4 rounded-[1.75rem] bg-gradient-to-br from-blue-500/12 via-fuchsia-400/10 to-teal-400/12 blur-2xl" />
@@ -101,13 +101,13 @@ export default function HomePage() {
               {[
                 {
                   title: 'Launch',
-                  subtitle: 'Your Digital Presence',
+                  subtitle: 'Your Business Website',
                   icon: Rocket,
                   gradient: 'from-blue-500 to-blue-600',
                 },
                 {
                   title: 'Grow',
-                  subtitle: 'Fast & Smart',
+                  subtitle: 'Your Brand Value',
                   icon: Zap,
                   gradient: 'from-rose-500 to-pink-600',
                 },
@@ -126,18 +126,25 @@ export default function HomePage() {
               ].map((card, index) => (
                 <div
                   key={index}
-                  className="rounded-2xl bg-white/90 backdrop-blur-xl border border-white/70 shadow-md shadow-slate-200/40 p-5 sm:p-6 flex items-center gap-3 hover:-translate-y-0.5 hover:shadow-xl transition-all h-[120px] sm:h-[130px]"
+                  className="
+                    rounded-2xl bg-white/90 backdrop-blur-xl border border-white/70
+                    shadow-md shadow-slate-200/40
+                    p-4 sm:p-5 lg:p-6
+                    flex flex-col lg:flex-row lg:items-center
+                    text-left hover:-translate-y-0.5 hover:shadow-xl transition-all
+                    h-auto min-h-[100px] lg:min-h-[112px] lg:h-[120px]"
                 >
                   <div
-                    className={`h-12 w-12 flex-shrink-0 rounded-xl bg-gradient-to-br ${card.gradient} flex items-center justify-center shadow-md`}
+                    className={`h-10 w-10 sm:h-12 sm:w-12 flex-shrink-0 rounded-xl bg-gradient-to-br ${card.gradient}
+                                flex items-center justify-center shadow-md mb-3 lg:mb-0 lg:mr-4`}
                   >
-                    <card.icon className="w-6 h-6 text-white" />
+                    <card.icon className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
                   </div>
                   <div className="min-w-0">
-                    <h3 className="text-lg sm:text-xl font-bold text-gray-900 leading-tight truncate">
+                    <h3 className="text-base sm:text-lg lg:text-xl font-bold text-gray-900 leading-snug lg:leading-tight break-words lg:whitespace-nowrap">
                       {card.title}
                     </h3>
-                    <p className="mt-0.5 text-sm text-gray-600 whitespace-nowrap overflow-hidden text-ellipsis">
+                    <p className="mt-1 text-sm text-gray-600 leading-snug break-words">
                       {card.subtitle}
                     </p>
                   </div>
