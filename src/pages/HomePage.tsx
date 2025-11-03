@@ -352,7 +352,7 @@ export default function HomePage() {
               <div className="flex items-center justify-between mb-4">
                 <div className="flex items-center gap-3">
                   <div className="h-12 w-12 rounded-full bg-gradient-to-br from-primary-500 to-accent-cyan text-white font-bold flex items-center justify-center">
-                    AK
+                    MB
                   </div>
                   <div>
                     <p className="font-semibold text-gray-900">Manoj Badgujar</p>
@@ -375,7 +375,7 @@ export default function HomePage() {
               <div className="flex items-center justify-between mb-4">
                 <div className="flex items-center gap-3">
                   <div className="h-12 w-12 rounded-full bg-gradient-to-br from-accent-teal to-primary-600 text-white font-bold flex items-center justify-center">
-                    SP
+                    AS
                   </div>
                   <div>
                     <p className="font-semibold text-gray-900">Akash Sadan</p>
