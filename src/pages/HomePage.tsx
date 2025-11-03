@@ -332,6 +332,101 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* ================= TESTIMONIALS (NEW) ================= */}
+      <section className="py-20 bg-gradient-mesh">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12 observe-me opacity-0">
+            <h2 className="text-4xl md:text-5xl font-bold">
+              <span className="bg-gradient-primary bg-clip-text text-transparent">
+                What Our Clients Say
+              </span>
+            </h2>
+            <p className="text-lg text-gray-600 mt-3">
+              Real stories from local businesses we’ve helped grow
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-2 gap-8 max-w-6xl mx-auto">
+            {/* Review 1 */}
+            <div className="observe-me opacity-0 bg-white rounded-3xl p-8 shadow-xl border border-gray-100">
+              <div className="flex items-center justify-between mb-4">
+                <div className="flex items-center gap-3">
+                  <div className="h-12 w-12 rounded-full bg-gradient-to-br from-primary-500 to-accent-cyan text-white font-bold flex items-center justify-center">
+                    AK
+                  </div>
+                  <div>
+                    <p className="font-semibold text-gray-900">Manoj Badgujar</p>
+                    <p className="text-sm text-gray-600">Impulse Academy</p>
+                  </div>
+                </div>
+                <div className="flex items-center gap-1 text-amber-400">
+                  {[...Array(5)].map((_, i) => (
+                    <Star key={i} className="w-5 h-5 fill-current" />
+                  ))}
+                </div>
+              </div>
+              <p className="text-gray-700 leading-relaxed">
+                “They built us a great website! It’s clean, fast, and perfect for our academy. Very helpful and professional team.”
+              </p>
+            </div>
+
+            {/* Review 2 */}
+            <div className="observe-me opacity-0 bg-white rounded-3xl p-8 shadow-xl border border-gray-100">
+              <div className="flex items-center justify-between mb-4">
+                <div className="flex items-center gap-3">
+                  <div className="h-12 w-12 rounded-full bg-gradient-to-br from-accent-teal to-primary-600 text-white font-bold flex items-center justify-center">
+                    SP
+                  </div>
+                  <div>
+                    <p className="font-semibold text-gray-900">Akash Sadan</p>
+                    <p className="text-sm text-gray-600">Turtle Wings</p>
+                  </div>
+                </div>
+                <div className="flex items-center gap-1 text-amber-400">
+                  {[...Array(5)].map((_, i) => (
+                    <Star key={i} className="w-5 h-5 fill-current" />
+                  ))}
+                </div>
+              </div>
+              <p className="text-gray-700 leading-relaxed">
+                “Amazing work! Our website looks creative and easy to use. The team really understood our brand.”
+              </p>
+            </div>
+          </div>
+
+          {/* JSON-LD for SEO (optional but helpful) */}
+          <script type="application/ld+json" dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "Organization",
+              "name": "WingzSphere Tech",
+              "url": "https://wingzspheretech.in",
+              "aggregateRating": {
+                "@type": "AggregateRating",
+                "ratingValue": "5",
+                "reviewCount": "2"
+              },
+              "review": [
+                {
+                  "@type": "Review",
+                  "author": { "@type": "Person", "name": "Manoj Badgujar" },
+                  "reviewBody": "They built us a great website! It’s clean, fast, and perfect for our academy. Very helpful and professional team.",
+                  "name": "Excellent website + marketing results",
+                  "reviewRating": { "@type": "Rating", "ratingValue": "5" }
+                },
+                {
+                  "@type": "Review",
+                  "author": { "@type": "Person", "name": "Akash Sadan" },
+                  "reviewBody": "Amazing work! Our website looks creative and easy to use. The team really understood our brand.",
+                  "name": "Great design and growth support",
+                  "reviewRating": { "@type": "Rating", "ratingValue": "5" }
+                }
+              ]
+            })
+          }} />
+        </div>
+      </section>
+
       {/* ================= CTA ================= */}
       <section className="py-20 bg-gradient-primary relative overflow-hidden">
         <div className="absolute inset-0 opacity-10">
