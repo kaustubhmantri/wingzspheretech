@@ -10,17 +10,20 @@ export default function ContactPage() {
     company: '',
     service: '',
     message: '',
-    honeypot: ''
+    honeypot: '' // used as botcheck for Web3Forms
   });
   const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
   const [errorMessage, setErrorMessage] = useState('');
 
   useEffect(() => {
-    document.title = 'Contact WingzSphere Tech | Let\'s Build Your Digital Presence';
+    document.title = "Contact WingzSphere Tech | Let's Build Your Digital Presence";
 
     const metaDescription = document.querySelector('meta[name="description"]');
     if (metaDescription) {
-      metaDescription.setAttribute('content', 'Get in touch with WingzSphere Tech. We\'re here to help you build a powerful digital presence. Contact us for a free consultation.');
+      metaDescription.setAttribute(
+        'content',
+        "Get in touch with WingzSphere Tech. We're here to help you build a powerful digital presence. Contact us for a free consultation."
+      );
     }
 
     const observer = new IntersectionObserver(
@@ -35,23 +38,21 @@ export default function ContactPage() {
     );
 
     document.querySelectorAll('.observe-me').forEach((el) => observer.observe(el));
-
     return () => observer.disconnect();
   }, []);
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
 
-    if (formData.honeypot) {
-      return;
-    }
+    // simple bot trap
+    if (formData.honeypot) return;
 
+    // basic validation
     if (!formData.name || !formData.email || !formData.message) {
       setStatus('error');
       setErrorMessage('Please fill in all required fields');
       return;
     }
-
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(formData.email)) {
       setStatus('error');
@@ -63,9 +64,40 @@ export default function ContactPage() {
     setErrorMessage('');
 
     try {
-      const { error } = await supabase
-        .from('contact_submissions')
-        .insert([
+      // ---------- 1) Send via Web3Forms (email to you) ----------
+      const WEB3_KEY = import.meta.env.VITE_WEB3FORMS_KEY as string;
+      if (!WEB3_KEY) {
+        throw new Error('Missing Web3Forms key. Set VITE_WEB3FORMS_KEY in env.');
+      }
+
+      const fd = new FormData();
+      fd.append('access_key', WEB3_KEY);
+      fd.append('name', formData.name);
+      fd.append('email', formData.email);
+      if (formData.phone) fd.append('phone', formData.phone);
+      if (formData.company) fd.append('company', formData.company);
+      if (formData.service) fd.append('service', formData.service);
+      fd.append('message', formData.message);
+
+      // optional – helps Web3Forms
+      fd.append('subject', 'New Contact Form Submission - WingzSphere Tech');
+      fd.append('from_name', 'WingzSphere Tech Website');
+      fd.append('botcheck', formData.honeypot); // honeypot
+
+      const res = await fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        body: fd
+      });
+      const data = await res.json();
+
+      if (!data.success) {
+        console.error('Web3Forms error:', data);
+        throw new Error('Failed to send message via Web3Forms.');
+      }
+
+      // ---------- 2) OPTIONAL: save a copy in Supabase ----------
+      try {
+        const { error } = await supabase.from('contact_submissions').insert([
           {
             name: formData.name,
             email: formData.email,
@@ -75,9 +107,12 @@ export default function ContactPage() {
             message: formData.message
           }
         ]);
+        if (error) console.warn('Supabase insert warning:', error.message);
+      } catch (dbErr) {
+        console.warn('Supabase insert failed (non-blocking):', dbErr);
+      }
 
-      if (error) throw error;
-
+      // success UI
       setStatus('success');
       setFormData({
         name: '',
@@ -89,13 +124,13 @@ export default function ContactPage() {
         honeypot: ''
       });
 
-      setTimeout(() => {
-        setStatus('idle');
-      }, 5000);
-    } catch (error) {
-      console.error('Error submitting form:', error);
+      setTimeout(() => setStatus('idle'), 5000);
+    } catch (err: any) {
+      console.error('Submit error:', err);
       setStatus('error');
-      setErrorMessage('Failed to submit form. Please try again or contact us directly.');
+      setErrorMessage(
+        err?.message || 'Failed to submit form. Please try again or contact us directly.'
+      );
     }
   };
 
@@ -122,7 +157,9 @@ export default function ContactPage() {
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-12">
             <div className="observe-me opacity-0">
-              <h2 className="text-3xl font-bold bg-gradient-primary bg-clip-text text-transparent mb-6">Get in Touch</h2>
+              <h2 className="text-3xl font-bold bg-gradient-primary bg-clip-text text-transparent mb-6">
+                Get in Touch
+              </h2>
               <p className="text-lg text-gray-700 mb-8 leading-relaxed">
                 Have a project in mind? We'd love to hear from you. Send us a message and we'll respond as soon as possible.
               </p>
@@ -166,9 +203,7 @@ export default function ContactPage() {
                   </div>
                   <div>
                     <h3 className="font-semibold text-gray-900 mb-1">Location</h3>
-                    <p className="text-gray-700">
-                      Nashik, Maharashtra, India
-                    </p>
+                    <p className="text-gray-700">Nashik, Maharashtra, India</p>
                   </div>
                 </div>
               </div>
@@ -181,7 +216,10 @@ export default function ContactPage() {
             </div>
 
             <div className="observe-me opacity-0">
-              <form onSubmit={handleSubmit} className="bg-gradient-to-br from-gray-50 to-white rounded-3xl p-8 shadow-xl border border-gray-100">
+              <form
+                onSubmit={handleSubmit}
+                className="bg-gradient-to-br from-gray-50 to-white rounded-3xl p-8 shadow-xl border border-gray-100"
+              >
                 <div className="space-y-6">
                   <div>
                     <label htmlFor="name" className="block text-sm font-semibold text-gray-900 mb-2">
@@ -274,6 +312,7 @@ export default function ContactPage() {
                     />
                   </div>
 
+                  {/* Honeypot (bot) field */}
                   <input
                     type="text"
                     name="honeypot"
