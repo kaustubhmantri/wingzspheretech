@@ -187,12 +187,12 @@ export default function ContactPage() {
                   <div>
                     <h3 className="font-semibold text-gray-900 mb-1">WhatsApp</h3>
                     <a
-                      href="https://wa.me/917588535092"
+                      href="https://wa.me/918468831596"
                       target="_blank"
                       rel="noopener noreferrer"
                       className="text-primary-600 hover:text-primary-700 transition-colors"
                     >
-                      +91 75885 35092
+                      +91 84688 31596
                     </a>
                   </div>
                 </div>
