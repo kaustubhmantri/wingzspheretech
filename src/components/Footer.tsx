@@ -1,4 +1,4 @@
-import { Mail, MapPin, Instagram, Linkedin } from 'lucide-react';
+import { Mail, MapPin, Instagram, Linkedin, Phone } from 'lucide-react';
 
 interface FooterProps {
   onNavigate: (page: string) => void;
@@ -54,6 +54,17 @@ export default function Footer({ onNavigate }: FooterProps) {
                 >
                   contact@wingzspheretech.in
                 </a>
+              </li>
+              <li className="flex items-start space-x-3">
+                <Phone className="w-5 h-5 text-blue-400 flex-shrink-0 mt-0.5" />
+                <a
+                  href="https://wa.me/918468831596"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-sm text-gray-400 hover:text-blue-400 transition-colors"
+                >
+                  +91 84688 31596
+               </a>
               </li>
               <li className="flex items-start space-x-3">
                 <MapPin className="w-5 h-5 text-blue-400 flex-shrink-0 mt-0.5" />
